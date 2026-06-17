@@ -81,21 +81,5 @@ A grid of 7 verified credentials:
 ### 7. Education Timeline
 *   **B.Tech CSE (AI & ML)** — CMR Technical Campus (2024 – 2028)
 *   **Intermediate MPC** — Deeksha Junior College (94.6%)
+
 *   **Secondary School CBSE** — DAV Public School (69.5%)
-
----
-
-## 🛠️ Local Setup & Deploy
-
-To view this portfolio website locally:
-
-1.  Clone this repository:
-    ```bash
-    git clone https://github.com/Rithu2007/portfolio.git
-    cd portfolio
-    ```
-2.  Open `index.html` directly in any web browser.
-3.  If you want to view local certificates and resume files, ensure your files are placed in:
-    *   `assets/resume.pdf`
-    *   `assets/certificates/cert-1.jpg` through `cert-7.jpg`
-    *   Or execute `copy_assets.bat` on Windows to sync your local folders automatically.
