@@ -165,7 +165,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       4. NAVBAR & THEME TOGGLE (PIXEL-PERFECT ALIGNMENT)
+       4. NAVBAR & THEME TOGGLE
        ────────────────────────────────────────────────────────────── */
     #navbar {
       position: fixed;
@@ -301,7 +301,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       5. STICKY SIDE INDEX RAIL (DESKTOP >1080px)
+       5. STICKY SIDE INDEX RAIL
        ────────────────────────────────────────────────────────────── */
     .index-rail {
       position: fixed;
@@ -357,7 +357,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       6. HERO SPREAD WITH PORTRAIT PHOTO
+       6. HERO SPREAD WITH CANVAS & PORTRAIT PHOTO
        ────────────────────────────────────────────────────────────── */
     #hero {
       min-height: 100vh;
@@ -366,6 +366,24 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Interactive Background Canvas */
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+    }
+
+    .hero-content-wrapper {
+      position: relative;
+      z-index: 2;
     }
 
     .hero-masthead {
@@ -424,7 +442,6 @@
       margin-bottom: 40px;
     }
 
-    /* Portrait Image Wrapper */
     .hero-portrait-box {
       display: flex;
       flex-direction: column;
@@ -566,7 +583,51 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       7. SECTION 01 — ABOUT SPREAD
+       7. INFINITE EDITORIAL KINETIC MARQUEE TICKER
+       ────────────────────────────────────────────────────────────── */
+    .marquee-container {
+      width: 100%;
+      overflow: hidden;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--card-bg);
+      padding: 12px 0;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .marquee-content {
+      display: inline-flex;
+      animation: marquee-scroll 28s linear infinite;
+      gap: 32px;
+    }
+
+    .marquee-container:hover .marquee-content {
+      animation-play-state: paused;
+    }
+
+    .marquee-item {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--ink);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .marquee-bullet {
+      color: var(--secondary-text);
+    }
+
+    @keyframes marquee-scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ──────────────────────────────────────────────────────────────
+       8. SECTION 01 — ABOUT SPREAD
        ────────────────────────────────────────────────────────────── */
     .about-layout {
       display: grid;
@@ -627,7 +688,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       8. SECTION 02 — WORK EXPERIENCE
+       9. SECTION 02 — WORK EXPERIENCE
        ────────────────────────────────────────────────────────────── */
     .exp-entry {
       border-left: 2px solid var(--ink);
@@ -690,7 +751,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       9. SECTION 03 — FEATURED PROJECTS
+       10. SECTION 03 — FEATURED PROJECTS
        ────────────────────────────────────────────────────────────── */
     .projects-stack {
       display: flex;
@@ -796,11 +857,45 @@
       padding: 4px 10px;
       color: var(--ink);
       background: var(--bg);
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .tech-tag:hover {
+      border-color: var(--ink);
+      background: var(--card-bg-hover);
     }
 
     /* ──────────────────────────────────────────────────────────────
-       10. SECTION 04 — SKILLS
+       11. SECTION 04 — SKILLS WITH INTERACTIVE FILTER TABS
        ────────────────────────────────────────────────────────────── */
+    .skills-filter-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 32px;
+    }
+
+    .skill-filter-btn {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--secondary-text);
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .skill-filter-btn:hover,
+    .skill-filter-btn.active {
+      border-color: var(--ink);
+      color: var(--bg);
+      background: var(--ink);
+    }
+
     .skills-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -811,6 +906,11 @@
       border: 1px solid var(--border);
       padding: 24px;
       background: var(--card-bg);
+      transition: transform 0.3s ease, opacity 0.3s ease, border-color 0.3s ease;
+    }
+
+    .skill-block.hidden {
+      display: none;
     }
 
     .skill-cat-name {
@@ -847,7 +947,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       11. SECTION 05 — CERTIFICATIONS (PRESERVED CONTENT & LIGHTBOX)
+       12. SECTION 05 — CERTIFICATIONS (PRESERVED CONTENT & LIGHTBOX)
        ────────────────────────────────────────────────────────────── */
     .cert-grid {
       display: grid;
@@ -989,7 +1089,7 @@
       border-color: var(--ink);
     }
 
-    /* Lightbox modal */
+    /* Enhanced Lightbox modal with Prev/Next Controls */
     .lightbox {
       position: fixed;
       inset: 0;
@@ -1010,23 +1110,49 @@
 
     .lightbox-img-wrapper {
       position: relative;
-      max-width: 90vw;
-      max-height: 85vh;
+      max-width: 85vw;
+      max-height: 80vh;
       border: 1px solid rgba(255,255,255,0.2);
       background: var(--bg);
     }
 
     .lightbox img {
       max-width: 100%;
-      max-height: 85vh;
+      max-height: 80vh;
       display: block;
       object-fit: contain;
     }
 
+    .lightbox-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.6rem;
+      color: #ffffff;
+      cursor: pointer;
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.6);
+      z-index: 2010;
+      transition: background 0.2s ease;
+      user-select: none;
+    }
+
+    .lightbox-nav-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .lightbox-prev { left: 24px; }
+    .lightbox-next { right: 24px; }
+
     .lightbox-close {
       position: absolute;
       top: 24px;
-      right: 32px;
+      right: 24px;
       font-size: 1.5rem;
       color: #ffffff;
       cursor: pointer;
@@ -1041,7 +1167,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       12. SECTION 06 — ACHIEVEMENTS
+       13. SECTION 06 — ACHIEVEMENTS
        ────────────────────────────────────────────────────────────── */
     .achievements-grid {
       display: grid;
@@ -1096,7 +1222,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       13. SECTION 07 — EDUCATION
+       14. SECTION 07 — EDUCATION
        ────────────────────────────────────────────────────────────── */
     .edu-timeline {
       display: flex;
@@ -1159,7 +1285,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       14. SECTION 08 — COMPETITIVE PROGRAMMING STATS
+       15. SECTION 08 — COMPETITIVE PROGRAMMING STATS & COUNTERS
        ────────────────────────────────────────────────────────────── */
     .cp-overview-block {
       border: 1px solid var(--border);
@@ -1228,7 +1354,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       15. SECTION 09 — CONTACT SPREAD
+       16. SECTION 09 — CONTACT SPREAD
        ────────────────────────────────────────────────────────────── */
     .contact-layout {
       display: grid;
@@ -1280,7 +1406,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       16. FOOTER
+       17. FOOTER
        ────────────────────────────────────────────────────────────── */
     #footer {
       padding: 40px 0;
@@ -1294,7 +1420,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       17. CUSTOM DESKTOP SPRING CURSOR
+       18. CUSTOM DESKTOP SPRING CURSOR
        ────────────────────────────────────────────────────────────── */
     .custom-cursor {
       position: fixed;
@@ -1319,11 +1445,11 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       18. RESPONSIVE BREAKPOINTS
+       19. RESPONSIVE BREAKPOINTS
        ────────────────────────────────────────────────────────────── */
     @media (max-width: 1180px) {
       .nav-links {
-        display: none; /* collapse to menu drawer on medium & smaller screens */
+        display: none;
       }
       .hamburger {
         display: flex;
@@ -1411,7 +1537,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       19. PREFERS-REDUCED-MOTION
+       20. PREFERS-REDUCED-MOTION
        ────────────────────────────────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
@@ -1423,7 +1549,7 @@
         transition-duration: 0s !important;
         transition-delay: 0s !important;
       }
-      .custom-cursor {
+      .custom-cursor, #hero-canvas, .marquee-container {
         display: none !important;
       }
       .shiny-sweep {
@@ -1483,13 +1609,14 @@
 
   <!-- ===================== HERO SPREAD ===================== -->
   <section id="hero">
-    <div class="container">
+    <canvas id="hero-canvas"></canvas>
+
+    <div class="container hero-content-wrapper">
       <div class="hero-masthead">
         <span class="hero-eyebrow">CMR TECHNICAL CAMPUS // CSE (AI &amp; ML) UNDERGRADUATE</span>
         <h1 class="hero-title shiny-sweep split-text-wrap" id="hero-masthead-title">Allapuram Sai Ritish</h1>
         
         <div class="hero-issue-strip">
-          <span>VOL. 01 — 2026 EDITION</span>
           <span>FRONTEND DEVELOPER / WEB DEVELOPER</span>
           <span>HYDERABAD, INDIA</span>
         </div>
@@ -1547,6 +1674,24 @@
       </div>
     </div>
   </section>
+
+  <!-- ===================== INFINITE KINETIC MARQUEE TICKER ===================== -->
+  <div class="marquee-container" aria-hidden="true">
+    <div class="marquee-content">
+      <span class="marquee-item">FRONTEND DEVELOPER <span class="marquee-bullet">•</span></span>
+      <span class="marquee-item">CS (AI &amp; ML) UNDERGRADUATE <span class="marquee-bullet">•</span></span>
+      <span class="marquee-item">NODEY STUDIO AI ARCHITECTURE <span class="marquee-bullet">•</span></span>
+      <span class="marquee-item">CODETRACK PLATFORM <span class="marquee-bullet">•</span></span>
+      <span class="marquee-item">580+ CP PROBLEMS SOLVED <span class="marquee-bullet">•</span></span>
+      <span class="marquee-item">COURTX INTERN <span class="marquee-bullet">•</span></span>
+      <span class="marquee-item">FRONTEND DEVELOPER <span class="marquee-bullet">•</span></span>
+      <span class="marquee-item">CS (AI &amp; ML) UNDERGRADUATE <span class="marquee-bullet">•</span></span>
+      <span class="marquee-item">NODEY STUDIO AI ARCHITECTURE <span class="marquee-bullet">•</span></span>
+      <span class="marquee-item">CODETRACK PLATFORM <span class="marquee-bullet">•</span></span>
+      <span class="marquee-item">580+ CP PROBLEMS SOLVED <span class="marquee-bullet">•</span></span>
+      <span class="marquee-item">COURTX INTERN <span class="marquee-bullet">•</span></span>
+    </div>
+  </div>
 
   <!-- ===================== SECTION 01 — ABOUT ===================== -->
   <section id="about">
@@ -1699,8 +1844,18 @@
         <h2 class="section-title shiny-sweep blur-heading">Technical &amp; Soft Skills</h2>
       </div>
 
+      <!-- Interactive Filter Tabs -->
+      <div class="skills-filter-row" id="skills-filter-row">
+        <button class="skill-filter-btn active" data-filter="all">ALL</button>
+        <button class="skill-filter-btn" data-filter="languages">LANGUAGES</button>
+        <button class="skill-filter-btn" data-filter="frontend">FRONTEND</button>
+        <button class="skill-filter-btn" data-filter="backend">BACKEND &amp; DB</button>
+        <button class="skill-filter-btn" data-filter="tools">TOOLS &amp; AI</button>
+        <button class="skill-filter-btn" data-filter="soft">SOFT SKILLS</button>
+      </div>
+
       <div class="skills-grid">
-        <div class="skill-block">
+        <div class="skill-block" data-category="languages">
           <h3 class="skill-cat-name">Languages</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">C</span>
@@ -1710,7 +1865,7 @@
           </div>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" data-category="frontend">
           <h3 class="skill-cat-name">Frontend</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">HTML5</span>
@@ -1721,7 +1876,7 @@
           </div>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" data-category="frontend">
           <h3 class="skill-cat-name">Frameworks &amp; UI</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Bootstrap 5</span>
@@ -1731,7 +1886,7 @@
           </div>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" data-category="backend">
           <h3 class="skill-cat-name">Backend &amp; Database</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Node.js</span>
@@ -1739,7 +1894,7 @@
           </div>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" data-category="tools">
           <h3 class="skill-cat-name">Tools</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Git</span>
@@ -1750,7 +1905,7 @@
           </div>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" data-category="tools">
           <h3 class="skill-cat-name">AI-Augmented Workflow</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Claude AI &amp; Codex (Force-Multipliers)</span>
@@ -1758,7 +1913,7 @@
           </div>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" data-category="soft">
           <h3 class="skill-cat-name">Soft Skills</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Problem Solving</span>
@@ -1770,7 +1925,7 @@
           </div>
         </div>
 
-        <div class="skill-block">
+        <div class="skill-block" data-category="tools">
           <h3 class="skill-cat-name">Interests</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Machine Learning (Beginner level)</span>
@@ -1789,9 +1944,9 @@
         <h2 class="section-title shiny-sweep blur-heading">Certifications</h2>
       </div>
 
-      <div class="cert-grid">
+      <div class="cert-grid" id="cert-grid">
         <!-- Cert 1 -->
-        <div class="cert-card" data-cert-src="assets/certificates/cert-1.jpg">
+        <div class="cert-card" data-cert-idx="0" data-cert-src="assets/certificates/cert-1.jpg">
           <span class="cert-badge">Job Simulation</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-1.jpg" alt="JPMorgan Chase Software Engineering Job Simulation Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -1808,7 +1963,7 @@
         </div>
 
         <!-- Cert 2 -->
-        <div class="cert-card" data-cert-src="assets/certificates/cert-2.jpg">
+        <div class="cert-card" data-cert-idx="1" data-cert-src="assets/certificates/cert-2.jpg">
           <span class="cert-badge">Hackathon</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-2.jpg" alt="Smart India Hackathon (SIH) Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -1825,7 +1980,7 @@
         </div>
 
         <!-- Cert 3 -->
-        <div class="cert-card" data-cert-src="assets/certificates/cert-3.jpg">
+        <div class="cert-card" data-cert-idx="2" data-cert-src="assets/certificates/cert-3.jpg">
           <span class="cert-badge">Program</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-3.jpg" alt="Google Cloud AI Applications Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -1842,7 +1997,7 @@
         </div>
 
         <!-- Cert 4 -->
-        <div class="cert-card" data-cert-src="assets/certificates/cert-4.jpg">
+        <div class="cert-card" data-cert-idx="3" data-cert-src="assets/certificates/cert-4.jpg">
           <span class="cert-badge">Job Simulation</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-4.jpg" alt="Tata Group Data Analytics Job Simulation Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -1859,7 +2014,7 @@
         </div>
 
         <!-- Cert 5 -->
-        <div class="cert-card" data-cert-src="assets/certificates/cert-5.jpg">
+        <div class="cert-card" data-cert-idx="4" data-cert-src="assets/certificates/cert-5.jpg">
           <span class="cert-badge">Course</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-5.jpg" alt="Google AI Essentials Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -1876,7 +2031,7 @@
         </div>
 
         <!-- Cert 6 -->
-        <div class="cert-card" data-cert-src="assets/certificates/cert-6.jpg">
+        <div class="cert-card" data-cert-idx="5" data-cert-src="assets/certificates/cert-6.jpg">
           <span class="cert-badge">Competition</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-6.jpg" alt="GDG Capture The Flag Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -1893,7 +2048,7 @@
         </div>
 
         <!-- Cert 7 -->
-        <div class="cert-card" data-cert-src="assets/certificates/cert-7.jpg">
+        <div class="cert-card" data-cert-idx="6" data-cert-src="assets/certificates/cert-7.jpg">
           <span class="cert-badge">Bootcamp</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-7.jpg" alt="Complete Full-Stack Web Development Bootcamp Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -2001,7 +2156,7 @@
       </div>
 
       <div class="cp-overview-block">
-        <div class="cp-total-num">580+</div>
+        <div class="cp-total-num counter-num" data-target="580" data-suffix="+">0</div>
         <div class="cp-total-label">TOTAL PROBLEMS SOLVED ACROSS LEETCODE, CODECHEF &amp; CODEFORCES</div>
       </div>
 
@@ -2009,7 +2164,7 @@
         <div class="cp-card">
           <div class="cp-platform">LEETCODE</div>
           <div>
-            <div class="cp-stat-val">217</div>
+            <div class="cp-stat-val counter-num" data-target="217" data-suffix="">0</div>
             <div class="cp-stat-detail">Problems Solved<br>Rating: 1343 (Peak 1430)</div>
           </div>
         </div>
@@ -2017,7 +2172,7 @@
         <div class="cp-card">
           <div class="cp-platform">CODECHEF</div>
           <div>
-            <div class="cp-stat-val">326</div>
+            <div class="cp-stat-val counter-num" data-target="326" data-suffix="">0</div>
             <div class="cp-stat-detail">Problems Solved<br>Rating: 1265 (Peak)<br>Global Rank: 17,502</div>
           </div>
         </div>
@@ -2025,7 +2180,7 @@
         <div class="cp-card">
           <div class="cp-platform">CODEFORCES</div>
           <div>
-            <div class="cp-stat-val">~40</div>
+            <div class="cp-stat-val counter-num" data-target="40" data-prefix="~" data-suffix="">0</div>
             <div class="cp-stat-detail">Problems Solved</div>
           </div>
         </div>
@@ -2081,6 +2236,9 @@
   <!-- ===================== LIGHTBOX MODAL ===================== -->
   <div class="lightbox" id="lightbox">
     <button class="lightbox-close" id="lightbox-close-btn" aria-label="Close Lightbox">✕</button>
+    <button class="lightbox-nav-btn lightbox-prev" id="lightbox-prev-btn" aria-label="Previous Certificate">‹</button>
+    <button class="lightbox-nav-btn lightbox-next" id="lightbox-next-btn" aria-label="Next Certificate">›</button>
+
     <div class="lightbox-img-wrapper">
       <img id="lightbox-img" src="" alt="Certificate Preview">
     </div>
@@ -2181,7 +2339,175 @@
       })();
 
       /* ──────────────────────────────────────────────────────────────
-         4. SCROLL-TRIGGERED BLUR HEADINGS (INTERSECTION OBSERVER)
+         4. INTERACTIVE HERO CANVAS PARTICLES
+         ────────────────────────────────────────────────────────────── */
+      (() => {
+        const canvas = document.getElementById('hero-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) return;
+
+        let width = canvas.width = canvas.offsetWidth;
+        let height = canvas.height = canvas.offsetHeight;
+
+        window.addEventListener('resize', () => {
+          width = canvas.width = canvas.offsetWidth;
+          height = canvas.height = canvas.offsetHeight;
+        });
+
+        const particles = [];
+        const numParticles = 24;
+
+        for (let i = 0; i < numParticles; i++) {
+          particles.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            vx: (Math.random() - 0.5) * 0.4,
+            vy: (Math.random() - 0.5) * 0.4,
+            r: 1.5
+          });
+        }
+
+        let mouseX = width / 2;
+        let mouseY = height / 2;
+
+        document.addEventListener('mousemove', (e) => {
+          const rect = canvas.getBoundingClientRect();
+          mouseX = e.clientX - rect.left;
+          mouseY = e.clientY - rect.top;
+        });
+
+        function animateCanvas() {
+          ctx.clearRect(0, 0, width, height);
+
+          const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+          ctx.fillStyle = isDark ? '#ffffff' : '#000000';
+          ctx.strokeStyle = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.08)';
+
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.x += p.vx;
+            p.y += p.vy;
+
+            if (p.x < 0 || p.x > width) p.vx *= -1;
+            if (p.y < 0 || p.y > height) p.vy *= -1;
+
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+
+            for (let j = i + 1; j < particles.length; j++) {
+              const p2 = particles[j];
+              const dist = Math.hypot(p.x - p2.x, p.y - p2.y);
+              if (dist < 120) {
+                ctx.beginPath();
+                ctx.moveTo(p.x, p.y);
+                ctx.lineTo(p2.x, p2.y);
+                ctx.stroke();
+              }
+            }
+
+            const mouseDist = Math.hypot(p.x - mouseX, p.y - mouseY);
+            if (mouseDist < 100) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(mouseX, mouseY);
+              ctx.stroke();
+            }
+          }
+
+          requestAnimationFrame(animateCanvas);
+        }
+
+        animateCanvas();
+      })();
+
+      /* ──────────────────────────────────────────────────────────────
+         5. INTERACTIVE NUMERICAL COUNT-UP ANIMATION FOR CP STATS
+         ────────────────────────────────────────────────────────────── */
+      (() => {
+        const counters = document.querySelectorAll('.counter-num');
+        if (!counters.length) return;
+
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        function startCounting(el) {
+          const target = parseInt(el.getAttribute('data-target'), 10);
+          const prefix = el.getAttribute('data-prefix') || '';
+          const suffix = el.getAttribute('data-suffix') || '';
+
+          if (prefersReduced) {
+            el.textContent = `${prefix}${target}${suffix}`;
+            return;
+          }
+
+          let current = 0;
+          const duration = 1500;
+          const startTime = performance.now();
+
+          function updateCount(now) {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease out cubic
+            const easeProgress = 1 - Math.pow(1 - progress, 3);
+            current = Math.floor(easeProgress * target);
+
+            el.textContent = `${prefix}${current}${suffix}`;
+
+            if (progress < 1) {
+              requestAnimationFrame(updateCount);
+            } else {
+              el.textContent = `${prefix}${target}${suffix}`;
+            }
+          }
+
+          requestAnimationFrame(updateCount);
+        }
+
+        const counterObserver = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              startCounting(entry.target);
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+
+        counters.forEach((counter) => counterObserver.observe(counter));
+      })();
+
+      /* ──────────────────────────────────────────────────────────────
+         6. INTERACTIVE SKILL CATEGORY FILTER TABS
+         ────────────────────────────────────────────────────────────── */
+      (() => {
+        const filterBtns = document.querySelectorAll('.skill-filter-btn');
+        const skillBlocks = document.querySelectorAll('.skill-block');
+        if (!filterBtns.length || !skillBlocks.length) return;
+
+        filterBtns.forEach((btn) => {
+          btn.addEventListener('click', () => {
+            filterBtns.forEach((b) => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const filter = btn.getAttribute('data-filter');
+
+            skillBlocks.forEach((block) => {
+              const cat = block.getAttribute('data-category');
+              if (filter === 'all' || cat === filter) {
+                block.classList.remove('hidden');
+                block.style.opacity = '1';
+                block.style.transform = 'scale(1)';
+              } else {
+                block.classList.add('hidden');
+              }
+            });
+          });
+        });
+      })();
+
+      /* ──────────────────────────────────────────────────────────────
+         7. SCROLL-TRIGGERED BLUR HEADINGS (INTERSECTION OBSERVER)
          ────────────────────────────────────────────────────────────── */
       (() => {
         const blurHeadings = document.querySelectorAll('.blur-heading');
@@ -2213,7 +2539,7 @@
       })();
 
       /* ──────────────────────────────────────────────────────────────
-         5. STICKY SIDE INDEX RAIL HIGHLIGHTING
+         8. STICKY SIDE INDEX RAIL HIGHLIGHTING
          ────────────────────────────────────────────────────────────── */
       (() => {
         const railItems = document.querySelectorAll('.rail-item');
@@ -2245,7 +2571,7 @@
       })();
 
       /* ──────────────────────────────────────────────────────────────
-         6. DESKTOP-ONLY INTERACTIONS (CURSOR, MAGNETIC BTNS, 3D TILT)
+         9. DESKTOP-ONLY INTERACTIONS (CURSOR, MAGNETIC BTNS, 3D TILT)
          ────────────────────────────────────────────────────────────── */
       const isDesktop = window.innerWidth > 1080 && !window.matchMedia('(pointer: coarse)').matches;
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2271,7 +2597,7 @@
           }
           renderCursor();
 
-          document.querySelectorAll('a, button, .cert-card, .project-card').forEach((el) => {
+          document.querySelectorAll('a, button, .cert-card, .project-card, .skill-filter-btn').forEach((el) => {
             el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
             el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
           });
@@ -2317,16 +2643,28 @@
       }
 
       /* ──────────────────────────────────────────────────────────────
-         7. CERTIFICATE LIGHTBOX MODAL & PREVIEW
+         10. CERTIFICATE LIGHTBOX WITH PREV/NEXT NAVIGATION
          ────────────────────────────────────────────────────────────── */
       (() => {
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const closeBtn = document.getElementById('lightbox-close-btn');
-        if (!lightbox || !lightboxImg) return;
+        const prevBtn = document.getElementById('lightbox-prev-btn');
+        const nextBtn = document.getElementById('lightbox-next-btn');
 
-        function openLightbox(src) {
-          lightboxImg.setAttribute('src', src);
+        const certCards = Array.from(document.querySelectorAll('.cert-card'));
+        if (!lightbox || !lightboxImg || !certCards.length) return;
+
+        let currentIdx = 0;
+
+        function showCert(idx) {
+          currentIdx = (idx + certCards.length) % certCards.length;
+          const src = certCards[currentIdx].getAttribute('data-cert-src');
+          if (src) lightboxImg.setAttribute('src', src);
+        }
+
+        function openLightbox(idx) {
+          showCert(idx);
           lightbox.style.display = 'flex';
           requestAnimationFrame(() => {
             lightbox.classList.add('active');
@@ -2342,19 +2680,36 @@
           }, 300);
         }
 
-        document.querySelectorAll('.cert-card').forEach((card) => {
+        certCards.forEach((card, idx) => {
           card.addEventListener('click', (e) => {
-            const src = card.getAttribute('data-cert-src');
-            if (src) openLightbox(src);
+            openLightbox(idx);
           });
         });
+
+        if (prevBtn) {
+          prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showCert(currentIdx - 1);
+          });
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            showCert(currentIdx + 1);
+          });
+        }
 
         if (closeBtn) closeBtn.addEventListener('click', closeLightbox);
         lightbox.addEventListener('click', (e) => {
           if (e.target === lightbox) closeLightbox();
         });
+
         document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && lightbox.classList.contains('active')) closeLightbox();
+          if (!lightbox.classList.contains('active')) return;
+          if (e.key === 'Escape') closeLightbox();
+          if (e.key === 'ArrowLeft') showCert(currentIdx - 1);
+          if (e.key === 'ArrowRight') showCert(currentIdx + 1);
         });
       })();
 
