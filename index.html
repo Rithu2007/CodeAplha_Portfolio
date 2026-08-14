@@ -26,7 +26,6 @@
       --rail-bg: rgba(247, 247, 245, 0.92);
       --sweep-gradient: linear-gradient(110deg, transparent 20%, rgba(0, 0, 0, 0.12) 50%, transparent 80%);
       --glass-shimmer: rgba(0, 0, 0, 0.15);
-      --spotlight-overlay: rgba(10, 10, 10, 0.04);
     }
 
     html[data-theme="dark"] {
@@ -40,7 +39,6 @@
       --rail-bg: rgba(10, 10, 10, 0.92);
       --sweep-gradient: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.2) 50%, transparent 80%);
       --glass-shimmer: rgba(255, 255, 255, 0.25);
-      --spotlight-overlay: rgba(0, 0, 0, 0.6);
     }
 
     :root {
@@ -191,7 +189,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       4. DRAMATIC FALL-FROM-HEIGHT TITLE ANIMATION & SPOTLIGHT REVEAL
+       4. DRAMATIC FALL-FROM-HEIGHT TITLE & GROUND BREAKING EFFECT
        ────────────────────────────────────────────────────────────── */
     .section-header {
       display: flex;
@@ -200,6 +198,7 @@
       margin-bottom: 54px;
       border-bottom: 1px solid var(--border);
       padding-bottom: 20px;
+      position: relative;
     }
 
     .section-num {
@@ -219,20 +218,79 @@
       transform: translateY(0);
     }
 
-    /* Fall From Height Effect */
+    /* 3D Fall From Height Entrance Effect */
     .fall-from-height {
       opacity: 0;
-      transform: perspective(1200px) translate3d(0, -180px, 300px) rotateX(-45deg) scale(1.6);
-      filter: blur(20px);
+      transform: perspective(1200px) translate3d(0, -220px, 350px) rotateX(-50deg) scale(1.7);
+      filter: blur(24px);
       will-change: transform, opacity, filter;
-      transition: transform 1.1s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.9s ease, filter 0.9s ease;
+      transition: transform 1.15s cubic-bezier(0.18, 0.89, 0.32, 1.25), opacity 0.9s ease, filter 0.9s ease;
       position: relative;
+      display: inline-block;
     }
 
     .fall-from-height.landed {
       opacity: 1;
       transform: perspective(1200px) translate3d(0, 0, 0) rotateX(0deg) scale(1);
       filter: blur(0px);
+      animation: ground-impact-shake 0.28s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.95s;
+    }
+
+    @keyframes ground-impact-shake {
+      0%, 100% { transform: perspective(1200px) translate3d(0, 0, 0); }
+      20% { transform: perspective(1200px) translate3d(-4px, 4px, 0) rotate(-0.6deg); }
+      40% { transform: perspective(1200px) translate3d(4px, -3px, 0) rotate(0.6deg); }
+      60% { transform: perspective(1200px) translate3d(-2px, 2px, 0); }
+      80% { transform: perspective(1200px) translate3d(1px, -1px, 0); }
+    }
+
+    /* Side Surface Ground Breaking Fracture Line Burst */
+    .fall-from-height::before,
+    .fall-from-height::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      width: 0px;
+      height: 3px;
+      background-color: var(--ink);
+      opacity: 0;
+      transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.95s, opacity 0.3s ease 0.95s;
+      box-shadow: 0 0 10px var(--ink);
+      pointer-events: none;
+    }
+
+    .fall-from-height::before {
+      right: 100%;
+      margin-right: 12px;
+    }
+
+    .fall-from-height::after {
+      left: 100%;
+      margin-left: 12px;
+    }
+
+    .fall-from-height.landed::before,
+    .fall-from-height.landed::after {
+      width: 46px;
+      opacity: 1;
+      animation: crack-line-dissolve 1.2s ease-out 1s forwards;
+    }
+
+    @keyframes crack-line-dissolve {
+      0% {
+        width: 52px;
+        opacity: 1;
+        box-shadow: 0 -2px 0 var(--ink), 0 2px 0 var(--ink), 0 0 14px var(--ink);
+      }
+      40% {
+        width: 46px;
+        opacity: 0.9;
+      }
+      100% {
+        width: 28px;
+        opacity: 0.4;
+        box-shadow: none;
+      }
     }
 
     .section-title {
@@ -1665,7 +1723,7 @@
       <div class="hero-masthead glass-repair">
         <span class="hero-eyebrow">CMR TECHNICAL CAMPUS // CSE (AI &amp; ML) UNDERGRADUATE</span>
         
-        <!-- Allapuram Sai Ritish Title with Dramatic Fall From Height Entrance -->
+        <!-- Allapuram Sai Ritish Title with 3D Fall From Height Entrance & Ground Fracture Effect -->
         <h1 class="hero-title shiny-sweep fall-from-height" id="hero-masthead-title">Allapuram Sai Ritish</h1>
         
         <div class="hero-issue-strip">
@@ -1722,9 +1780,9 @@
   <!-- ===================== SECTION 01 — ABOUT ===================== -->
   <section id="about">
     <div class="container">
-      <div class="section-header fall-from-height">
+      <div class="section-header">
         <span class="section-num">01</span>
-        <h2 class="section-title shiny-sweep">About Me</h2>
+        <h2 class="section-title shiny-sweep fall-from-height">About Me</h2>
       </div>
 
       <div class="about-layout">
@@ -1770,9 +1828,9 @@
   <!-- ===================== SECTION 02 — WORK EXPERIENCE ===================== -->
   <section id="experience">
     <div class="container">
-      <div class="section-header fall-from-height">
+      <div class="section-header">
         <span class="section-num">02</span>
-        <h2 class="section-title shiny-sweep">Work Experience</h2>
+        <h2 class="section-title shiny-sweep fall-from-height">Work Experience</h2>
       </div>
 
       <div class="exp-entry glass-repair">
@@ -1794,9 +1852,9 @@
   <!-- ===================== SECTION 03 — PROJECTS ===================== -->
   <section id="projects">
     <div class="container">
-      <div class="section-header fall-from-height">
+      <div class="section-header">
         <span class="section-num">03</span>
-        <h2 class="section-title shiny-sweep">Featured Projects</h2>
+        <h2 class="section-title shiny-sweep fall-from-height">Featured Projects</h2>
       </div>
 
       <div class="projects-stack">
@@ -1865,9 +1923,9 @@
   <!-- ===================== SECTION 04 — SKILLS WITH INTERACTIVE FILTER TABS ===================== -->
   <section id="skills">
     <div class="container">
-      <div class="section-header fall-from-height">
+      <div class="section-header">
         <span class="section-num">04</span>
-        <h2 class="section-title shiny-sweep">Technical &amp; Soft Skills</h2>
+        <h2 class="section-title shiny-sweep fall-from-height">Technical &amp; Soft Skills</h2>
       </div>
 
       <!-- Interactive Filter Tabs -->
@@ -1965,9 +2023,9 @@
   <!-- ===================== SECTION 05 — CERTIFICATIONS ===================== -->
   <section id="certifications">
     <div class="container">
-      <div class="section-header fall-from-height">
+      <div class="section-header">
         <span class="section-num">05</span>
-        <h2 class="section-title shiny-sweep">Certifications</h2>
+        <h2 class="section-title shiny-sweep fall-from-height">Certifications</h2>
       </div>
 
       <div class="cert-grid" id="cert-grid">
@@ -2096,9 +2154,9 @@
   <!-- ===================== SECTION 06 — ACHIEVEMENTS ===================== -->
   <section id="achievements">
     <div class="container">
-      <div class="section-header fall-from-height">
+      <div class="section-header">
         <span class="section-num">06</span>
-        <h2 class="section-title shiny-sweep">Achievements</h2>
+        <h2 class="section-title shiny-sweep fall-from-height">Achievements</h2>
       </div>
 
       <div class="achievements-grid">
@@ -2140,9 +2198,9 @@
   <!-- ===================== SECTION 07 — EDUCATION ===================== -->
   <section id="education">
     <div class="container">
-      <div class="section-header fall-from-height">
+      <div class="section-header">
         <span class="section-num">07</span>
-        <h2 class="section-title shiny-sweep">Education</h2>
+        <h2 class="section-title shiny-sweep fall-from-height">Education</h2>
       </div>
 
       <div class="edu-timeline">
@@ -2176,9 +2234,9 @@
   <!-- ===================== SECTION 08 — COMPETITIVE PROGRAMMING STATS & COUNTERS ===================== -->
   <section id="cp">
     <div class="container">
-      <div class="section-header fall-from-height">
+      <div class="section-header">
         <span class="section-num">08</span>
-        <h2 class="section-title shiny-sweep">Competitive Programming</h2>
+        <h2 class="section-title shiny-sweep fall-from-height">Competitive Programming</h2>
       </div>
 
       <div class="cp-overview-block glass-repair">
@@ -2217,9 +2275,9 @@
   <!-- ===================== SECTION 09 — CONTACT SPREAD ===================== -->
   <section id="contact">
     <div class="container">
-      <div class="section-header fall-from-height">
+      <div class="section-header">
         <span class="section-num">09</span>
-        <h2 class="section-title shiny-sweep">Get In Touch</h2>
+        <h2 class="section-title shiny-sweep fall-from-height">Get In Touch</h2>
       </div>
 
       <div class="contact-layout">
@@ -2334,15 +2392,19 @@
       })();
 
       /* ──────────────────────────────────────────────────────────────
-         3. HERO TITLE & SECTION HEADINGS FALL FROM HEIGHT ENTRANCE
+         3. HERO TITLE DRAMATIC FALL FROM HEIGHT & GROUND IMPACT ENGINE
          ────────────────────────────────────────────────────────────── */
       (() => {
-        const titleEl = document.getElementById('hero-masthead-title');
-        if (titleEl) {
-          setTimeout(() => {
-            titleEl.classList.add('landed');
-          }, 150);
-        }
+        const heroTitle = document.getElementById('hero-masthead-title');
+        if (!heroTitle) return;
+
+        // Force initial state off-screen high altitude
+        heroTitle.classList.remove('landed');
+
+        // Trigger dramatic drop from height + ground impact after page render
+        setTimeout(() => {
+          heroTitle.classList.add('landed');
+        }, 280);
       })();
 
       /* ──────────────────────────────────────────────────────────────
@@ -2383,7 +2445,7 @@
       })();
 
       /* ──────────────────────────────────────────────────────────────
-         5. GLASS REPAIR & FALL-FROM-HEIGHT OBSERVER ENGINE
+         5. FALL-FROM-HEIGHT & GROUND IMPACT OBSERVER ENGINE
          ────────────────────────────────────────────────────────────── */
       (() => {
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2392,19 +2454,25 @@
         if (!fallTitles.length && !glassElements.length) return;
 
         if (prefersReduced) {
-          fallTitles.forEach((el) => el.classList.add('landed'));
+          fallTitles.forEach((el) => {
+            el.classList.add('landed');
+            const secHeader = el.closest('.section-header');
+            if (secHeader) secHeader.classList.add('landed');
+          });
           glassElements.forEach((el) => el.classList.add('repaired'));
           return;
         }
 
         function checkObserver() {
-          const triggerBottom = window.innerHeight * 0.88;
+          const triggerBottom = window.innerHeight * 0.85;
 
-          // Titles drop from height when middle of screen is reached
+          // Section titles drop from height & trigger ground fracture when scrolled into view
           fallTitles.forEach((title) => {
             const rect = title.getBoundingClientRect();
             if (rect.top < triggerBottom && rect.bottom > 0) {
               title.classList.add('landed');
+              const secHeader = title.closest('.section-header');
+              if (secHeader) secHeader.classList.add('landed');
             }
           });
 
