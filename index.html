@@ -189,7 +189,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       4. DRAMATIC FALL-FROM-HEIGHT TITLE & GROUND BREAKING EFFECT
+       4. DRAMATIC FALL-FROM-TOP-OF-SCREEN TITLE & GROUND IMPACT EFFECT
        ────────────────────────────────────────────────────────────── */
     .section-header {
       display: flex;
@@ -218,13 +218,13 @@
       transform: translateY(0);
     }
 
-    /* 3D Fall From Height Entrance Effect */
+    /* True Fall From Top Of Screen (-100vh altitude drop) */
     .fall-from-height {
       opacity: 0;
-      transform: perspective(1200px) translate3d(0, -220px, 350px) rotateX(-50deg) scale(1.7);
-      filter: blur(24px);
+      transform: perspective(1200px) translate3d(0, -100vh, 200px) rotateX(-45deg) scale(1.8);
+      filter: blur(20px);
       will-change: transform, opacity, filter;
-      transition: transform 1.15s cubic-bezier(0.18, 0.89, 0.32, 1.25), opacity 0.9s ease, filter 0.9s ease;
+      transition: transform 1.25s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.75s ease, filter 0.75s ease;
       position: relative;
       display: inline-block;
     }
@@ -233,14 +233,14 @@
       opacity: 1;
       transform: perspective(1200px) translate3d(0, 0, 0) rotateX(0deg) scale(1);
       filter: blur(0px);
-      animation: ground-impact-shake 0.28s cubic-bezier(0.36, 0.07, 0.19, 0.97) 0.95s;
+      animation: ground-impact-shake 0.3s cubic-bezier(0.36, 0.07, 0.19, 0.97) 1.1s;
     }
 
     @keyframes ground-impact-shake {
       0%, 100% { transform: perspective(1200px) translate3d(0, 0, 0); }
-      20% { transform: perspective(1200px) translate3d(-4px, 4px, 0) rotate(-0.6deg); }
-      40% { transform: perspective(1200px) translate3d(4px, -3px, 0) rotate(0.6deg); }
-      60% { transform: perspective(1200px) translate3d(-2px, 2px, 0); }
+      20% { transform: perspective(1200px) translate3d(-5px, 5px, 0) rotate(-0.8deg); }
+      40% { transform: perspective(1200px) translate3d(5px, -4px, 0) rotate(0.8deg); }
+      60% { transform: perspective(1200px) translate3d(-3px, 2px, 0); }
       80% { transform: perspective(1200px) translate3d(1px, -1px, 0); }
     }
 
@@ -254,40 +254,40 @@
       height: 3px;
       background-color: var(--ink);
       opacity: 0;
-      transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.95s, opacity 0.3s ease 0.95s;
+      transition: width 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275) 1.1s, opacity 0.3s ease 1.1s;
       box-shadow: 0 0 10px var(--ink);
       pointer-events: none;
     }
 
     .fall-from-height::before {
       right: 100%;
-      margin-right: 12px;
+      margin-right: 14px;
     }
 
     .fall-from-height::after {
       left: 100%;
-      margin-left: 12px;
+      margin-left: 14px;
     }
 
     .fall-from-height.landed::before,
     .fall-from-height.landed::after {
-      width: 46px;
+      width: 52px;
       opacity: 1;
-      animation: crack-line-dissolve 1.2s ease-out 1s forwards;
+      animation: crack-line-dissolve 1.2s ease-out 1.2s forwards;
     }
 
     @keyframes crack-line-dissolve {
       0% {
-        width: 52px;
+        width: 56px;
         opacity: 1;
         box-shadow: 0 -2px 0 var(--ink), 0 2px 0 var(--ink), 0 0 14px var(--ink);
       }
       40% {
-        width: 46px;
+        width: 48px;
         opacity: 0.9;
       }
       100% {
-        width: 28px;
+        width: 30px;
         opacity: 0.4;
         box-shadow: none;
       }
@@ -1723,7 +1723,7 @@
       <div class="hero-masthead glass-repair">
         <span class="hero-eyebrow">CMR TECHNICAL CAMPUS // CSE (AI &amp; ML) UNDERGRADUATE</span>
         
-        <!-- Allapuram Sai Ritish Title with 3D Fall From Height Entrance & Ground Fracture Effect -->
+        <!-- Allapuram Sai Ritish Title with -100vh Altitude Drop Entrance & Ground Fracture Effect -->
         <h1 class="hero-title shiny-sweep fall-from-height" id="hero-masthead-title">Allapuram Sai Ritish</h1>
         
         <div class="hero-issue-strip">
@@ -2392,19 +2392,21 @@
       })();
 
       /* ──────────────────────────────────────────────────────────────
-         3. HERO TITLE DRAMATIC FALL FROM HEIGHT & GROUND IMPACT ENGINE
+         3. HERO TITLE DRAMATIC FALL FROM TOP OF SCREEN (-100VH ALTITUDE)
          ────────────────────────────────────────────────────────────── */
       (() => {
         const heroTitle = document.getElementById('hero-masthead-title');
         if (!heroTitle) return;
 
-        // Force initial state off-screen high altitude
+        // Force initial state off-screen above the top of the browser window (-100vh)
         heroTitle.classList.remove('landed');
 
-        // Trigger dramatic drop from height + ground impact after page render
-        setTimeout(() => {
-          heroTitle.classList.add('landed');
-        }, 280);
+        // Trigger dramatic drop from top of screen after page render
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            heroTitle.classList.add('landed');
+          }, 350);
+        });
       })();
 
       /* ──────────────────────────────────────────────────────────────
@@ -2445,7 +2447,7 @@
       })();
 
       /* ──────────────────────────────────────────────────────────────
-         5. FALL-FROM-HEIGHT & GROUND IMPACT OBSERVER ENGINE
+         5. FALL-FROM-TOP & GROUND IMPACT OBSERVER ENGINE
          ────────────────────────────────────────────────────────────── */
       (() => {
         const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2466,7 +2468,7 @@
         function checkObserver() {
           const triggerBottom = window.innerHeight * 0.85;
 
-          // Section titles drop from height & trigger ground fracture when scrolled into view
+          // Section titles drop from top of screen (-100vh) & trigger ground fracture when scrolled into view
           fallTitles.forEach((title) => {
             const rect = title.getBoundingClientRect();
             if (rect.top < triggerBottom && rect.bottom > 0) {
