@@ -23,7 +23,7 @@
       --border-hover: rgba(10, 10, 10, 0.55);
       --card-bg: #ffffff;
       --card-bg-hover: #efefe9;
-      --rail-bg: rgba(247, 247, 245, 0.9);
+      --rail-bg: rgba(247, 247, 245, 0.92);
       --sweep-gradient: linear-gradient(110deg, transparent 20%, rgba(0, 0, 0, 0.12) 50%, transparent 80%);
     }
 
@@ -35,7 +35,7 @@
       --border-hover: rgba(247, 247, 245, 0.6);
       --card-bg: #121212;
       --card-bg-hover: #1c1c1c;
-      --rail-bg: rgba(10, 10, 10, 0.9);
+      --rail-bg: rgba(10, 10, 10, 0.92);
       --sweep-gradient: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.2) 50%, transparent 80%);
     }
 
@@ -165,7 +165,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       4. NAVBAR & THEME TOGGLE
+       4. NAVBAR & THEME TOGGLE (NORMALIZED FLEX ALIGNMENT)
        ────────────────────────────────────────────────────────────── */
     #navbar {
       position: fixed;
@@ -189,7 +189,9 @@
       max-width: var(--max-width);
       margin: 0 auto;
       padding: 0 24px;
-      gap: 16px;
+      gap: 20px;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .nav-logo {
@@ -201,13 +203,27 @@
       color: var(--ink);
       white-space: nowrap;
       flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      line-height: 1;
     }
 
     .nav-links {
       display: flex;
-      gap: 18px;
+      gap: 20px;
       align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+      list-style: none;
       white-space: nowrap;
+    }
+
+    .nav-links li {
+      display: flex;
+      align-items: center;
+      margin: 0;
+      padding: 0;
     }
 
     .nav-links a {
@@ -220,6 +236,9 @@
       padding: 4px 0;
       position: relative;
       white-space: nowrap;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
     }
 
     .nav-links a:hover,
@@ -237,6 +256,13 @@
       background-color: var(--ink);
     }
 
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+
     .theme-toggle-btn {
       background: none;
       border: 1px solid var(--border);
@@ -248,13 +274,15 @@
       letter-spacing: 0.1em;
       padding: 6px 14px;
       cursor: pointer;
-      display: flex;
+      display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 6px;
       white-space: nowrap;
       flex-shrink: 0;
       transition: border-color 0.2s ease, background-color 0.2s ease;
       min-height: 36px;
+      line-height: 1;
     }
 
     .theme-toggle-btn:hover {
@@ -370,7 +398,6 @@
       overflow: hidden;
     }
 
-    /* Interactive Background Canvas */
     #hero-canvas {
       position: absolute;
       inset: 0;
@@ -947,7 +974,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       12. SECTION 05 — CERTIFICATIONS (PRESERVED CONTENT & LIGHTBOX)
+       12. SECTION 05 — CERTIFICATIONS
        ────────────────────────────────────────────────────────────── */
     .cert-grid {
       display: grid;
@@ -1089,7 +1116,7 @@
       border-color: var(--ink);
     }
 
-    /* Enhanced Lightbox modal with Prev/Next Controls */
+    /* Lightbox modal with Prev/Next Controls */
     .lightbox {
       position: fixed;
       inset: 0;
@@ -1528,6 +1555,9 @@
       .container {
         padding: 0 16px;
       }
+      .nav-container {
+        padding: 0 16px;
+      }
       .hero-title {
         font-size: clamp(2.2rem, 9vw, 3.6rem);
       }
@@ -1594,7 +1624,7 @@
         <li><a href="#contact">Contact</a></li>
       </ul>
 
-      <div style="display: flex; align-items: center; gap: 10px; flex-shrink: 0;">
+      <div class="nav-actions">
         <button class="theme-toggle-btn" id="theme-toggle" aria-label="Toggle Print / Night Mode">
           <svg class="theme-icon" viewBox="0 0 24 24"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
           <span id="theme-toggle-text">NIGHT</span>
@@ -1836,7 +1866,7 @@
     </div>
   </section>
 
-  <!-- ===================== SECTION 04 — SKILLS ===================== -->
+  <!-- ===================== SECTION 04 — SKILLS WITH INTERACTIVE FILTER TABS ===================== -->
   <section id="skills">
     <div class="container">
       <div class="section-header">
@@ -2147,7 +2177,7 @@
     </div>
   </section>
 
-  <!-- ===================== SECTION 08 — COMPETITIVE PROGRAMMING ===================== -->
+  <!-- ===================== SECTION 08 — COMPETITIVE PROGRAMMING STATS & COUNTERS ===================== -->
   <section id="cp">
     <div class="container">
       <div class="section-header">
@@ -2188,7 +2218,7 @@
     </div>
   </section>
 
-  <!-- ===================== SECTION 09 — CONTACT ===================== -->
+  <!-- ===================== SECTION 09 — CONTACT SPREAD ===================== -->
   <section id="contact">
     <div class="container">
       <div class="section-header">
@@ -2449,7 +2479,6 @@
           function updateCount(now) {
             const elapsed = now - startTime;
             const progress = Math.min(elapsed / duration, 1);
-            // Ease out cubic
             const easeProgress = 1 - Math.pow(1 - progress, 3);
             current = Math.floor(easeProgress * target);
 
@@ -2573,7 +2602,7 @@
       /* ──────────────────────────────────────────────────────────────
          9. DESKTOP-ONLY INTERACTIONS (CURSOR, MAGNETIC BTNS, 3D TILT)
          ────────────────────────────────────────────────────────────── */
-      const isDesktop = window.innerWidth > 1080 && !window.matchMedia('(pointer: coarse)').matches;
+      const isDesktop = window.innerWidth > 1080 && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       if (isDesktop && !prefersReduced) {
@@ -2617,7 +2646,7 @@
           });
         });
 
-        // 3D Card Tilt
+        // 3D Card Tilt (Throttled with requestAnimationFrame)
         document.querySelectorAll('.tilt-card').forEach((card) => {
           let ticking = false;
 
@@ -2681,7 +2710,7 @@
         }
 
         certCards.forEach((card, idx) => {
-          card.addEventListener('click', (e) => {
+          card.addEventListener('click', () => {
             openLightbox(idx);
           });
         });
