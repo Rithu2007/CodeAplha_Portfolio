@@ -118,7 +118,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       3. HEADINGS & TYPOGRAPHY
+       3. HEADINGS & TYPOGRAPHY WITH SCROLL REVEAL ANIMATIONS
        ────────────────────────────────────────────────────────────── */
     .section-header {
       display: flex;
@@ -136,6 +136,14 @@
       font-size: 2.2rem;
       line-height: 1;
       color: var(--secondary-text);
+      opacity: 0;
+      transform: translateY(-20px);
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+    }
+
+    .section-header.revealed .section-num {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     .section-title {
@@ -147,6 +155,16 @@
       color: var(--ink);
       position: relative;
       display: inline-block;
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateX(-30px);
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease, filter 0.9s ease;
+    }
+
+    .section-header.revealed .section-title {
+      opacity: 1;
+      filter: blur(0px);
+      transform: translateX(0);
     }
 
     .shiny-sweep {
@@ -165,7 +183,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       4. NAVBAR & THEME TOGGLE (NORMALIZED FLEX ALIGNMENT)
+       4. NAVBAR & THEME TOGGLE
        ────────────────────────────────────────────────────────────── */
     #navbar {
       position: fixed;
@@ -329,63 +347,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       5. STICKY SIDE INDEX RAIL
-       ────────────────────────────────────────────────────────────── */
-    .index-rail {
-      position: fixed;
-      left: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 900;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .rail-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: var(--secondary-text);
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      opacity: 0.55;
-      transition: opacity 0.2s ease, color 0.2s ease;
-      cursor: pointer;
-    }
-
-    .rail-dot {
-      width: 6px;
-      height: 6px;
-      border: 1px solid var(--ink);
-      border-radius: 50%;
-      background-color: transparent;
-      transition: background-color 0.2s ease, transform 0.2s ease;
-    }
-
-    .rail-item:hover,
-    .rail-item.active {
-      opacity: 1;
-      color: var(--ink);
-    }
-
-    .rail-item.active .rail-dot {
-      background-color: var(--ink);
-      transform: scale(1.4);
-    }
-
-    .rail-label {
-      display: none;
-      text-transform: uppercase;
-    }
-
-    .index-rail:hover .rail-label {
-      display: inline;
-    }
-
-    /* ──────────────────────────────────────────────────────────────
-       6. HERO SPREAD WITH CANVAS & PORTRAIT PHOTO
+       5. HERO SPREAD WITH CANVAS & PORTRAIT PHOTO
        ────────────────────────────────────────────────────────────── */
     #hero {
       min-height: 100vh;
@@ -610,7 +572,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       7. INFINITE EDITORIAL KINETIC MARQUEE TICKER
+       6. INFINITE EDITORIAL KINETIC MARQUEE TICKER
        ────────────────────────────────────────────────────────────── */
     .marquee-container {
       width: 100%;
@@ -651,6 +613,75 @@
     @keyframes marquee-scroll {
       0% { transform: translateX(0); }
       100% { transform: translateX(-50%); }
+    }
+
+    /* ──────────────────────────────────────────────────────────────
+       7. DIVERSE SCROLL REVEAL ANIMATIONS (GLASS ASSEMBLY & MATRIX WAVES)
+       ────────────────────────────────────────────────────────────── */
+    
+    /* GLASS RE-ASSEMBLY ANIMATION (FOR FEATURED PROJECTS & SPEC BOXES) */
+    .glass-assemble-card {
+      opacity: 0;
+      transform: perspective(1000px) translate3d(0, 45px, 60px) rotateX(16deg) rotateY(-10deg) scale(0.92);
+      filter: blur(12px);
+      will-change: transform, opacity, filter;
+      transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease, filter 1s ease;
+    }
+
+    .glass-assemble-card.assembled {
+      opacity: 1;
+      transform: perspective(1000px) translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) scale(1);
+      filter: blur(0px);
+    }
+
+    /* MATRIX WAVE STAGGER ANIMATION (FOR SKILLS, CERTS & ACHIEVEMENTS) */
+    .matrix-item {
+      opacity: 0;
+      filter: blur(8px);
+      will-change: transform, opacity, filter;
+      transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.85s ease, filter 0.85s ease;
+    }
+
+    .matrix-item.from-left {
+      transform: translateX(-40px) scale(0.92);
+    }
+
+    .matrix-item.from-right {
+      transform: translateX(40px) scale(0.92);
+    }
+
+    .matrix-item.revealed {
+      opacity: 1;
+      filter: blur(0px);
+      transform: translateX(0) scale(1);
+    }
+
+    /* TIMELINE UNFOLD ANIMATION (FOR WORK EXP & EDUCATION) */
+    .timeline-unfold {
+      opacity: 0;
+      transform: translateY(35px) scale(0.95);
+      filter: blur(6px);
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.9s ease, filter 0.9s ease;
+    }
+
+    .timeline-unfold.revealed {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0px);
+    }
+
+    /* 3D STAT FLIP ANIMATION (FOR CP STAT CARDS) */
+    .cp-3d-card {
+      opacity: 0;
+      transform: perspective(1000px) rotateY(-35deg) translateY(20px);
+      filter: blur(6px);
+      transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.95s ease, filter 0.95s ease;
+    }
+
+    .cp-3d-card.revealed {
+      opacity: 1;
+      transform: perspective(1000px) rotateY(0deg) translateY(0);
+      filter: blur(0px);
     }
 
     /* ──────────────────────────────────────────────────────────────
@@ -1501,9 +1532,6 @@
     }
 
     @media (max-width: 1080px) {
-      .index-rail {
-        display: none !important;
-      }
       .hero-grid {
         grid-template-columns: 200px 1fr;
       }
@@ -1585,6 +1613,11 @@
       .shiny-sweep {
         background-image: none !important;
       }
+      .glass-assemble-card, .matrix-item, .timeline-unfold, .cp-3d-card, .section-num, .section-title {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+      }
     }
   </style>
 </head>
@@ -1592,20 +1625,6 @@
 
   <!-- ===================== CUSTOM DESKTOP CURSOR ===================== -->
   <div class="custom-cursor" id="custom-cursor"></div>
-
-  <!-- ===================== STICKY SIDE INDEX RAIL ===================== -->
-  <nav class="index-rail" id="index-rail" aria-label="Section Index">
-    <a href="#hero" class="rail-item active" data-section="hero"><span class="rail-dot"></span><span class="rail-label">00 COVER</span></a>
-    <a href="#about" class="rail-item" data-section="about"><span class="rail-dot"></span><span class="rail-label">01 ABOUT</span></a>
-    <a href="#experience" class="rail-item" data-section="experience"><span class="rail-dot"></span><span class="rail-label">02 EXP</span></a>
-    <a href="#projects" class="rail-item" data-section="projects"><span class="rail-dot"></span><span class="rail-label">03 WORK</span></a>
-    <a href="#skills" class="rail-item" data-section="skills"><span class="rail-dot"></span><span class="rail-label">04 SKILLS</span></a>
-    <a href="#certifications" class="rail-item" data-section="certifications"><span class="rail-dot"></span><span class="rail-label">05 CERTS</span></a>
-    <a href="#achievements" class="rail-item" data-section="achievements"><span class="rail-dot"></span><span class="rail-label">06 HONORS</span></a>
-    <a href="#education" class="rail-item" data-section="education"><span class="rail-dot"></span><span class="rail-label">07 EDU</span></a>
-    <a href="#cp" class="rail-item" data-section="cp"><span class="rail-dot"></span><span class="rail-label">08 CP</span></a>
-    <a href="#contact" class="rail-item" data-section="contact"><span class="rail-dot"></span><span class="rail-label">09 CONTACT</span></a>
-  </nav>
 
   <!-- ===================== NAVBAR ===================== -->
   <header id="navbar">
@@ -1728,7 +1747,7 @@
     <div class="container">
       <div class="section-header">
         <span class="section-num">01</span>
-        <h2 class="section-title shiny-sweep blur-heading">About Me</h2>
+        <h2 class="section-title shiny-sweep">About Me</h2>
       </div>
 
       <div class="about-layout">
@@ -1741,7 +1760,7 @@
           </p>
         </div>
 
-        <div class="about-spec-box">
+        <div class="about-spec-box glass-assemble-card">
           <div class="spec-row">
             <span class="spec-label">FULL NAME</span>
             <span class="spec-value">Allapuram Sai Ritish</span>
@@ -1776,10 +1795,10 @@
     <div class="container">
       <div class="section-header">
         <span class="section-num">02</span>
-        <h2 class="section-title shiny-sweep blur-heading">Work Experience</h2>
+        <h2 class="section-title shiny-sweep">Work Experience</h2>
       </div>
 
-      <div class="exp-entry">
+      <div class="exp-entry timeline-unfold">
         <div class="exp-header-row">
           <h3 class="exp-title">Frontend Developer Intern</h3>
           <span class="exp-dates">May 2026 – August 2026</span>
@@ -1800,12 +1819,12 @@
     <div class="container">
       <div class="section-header">
         <span class="section-num">03</span>
-        <h2 class="section-title shiny-sweep blur-heading">Featured Projects</h2>
+        <h2 class="section-title shiny-sweep">Featured Projects</h2>
       </div>
 
       <div class="projects-stack">
-        <!-- Project 01 -->
-        <article class="project-card tilt-card">
+        <!-- Project 01 (Shatter / Glass Assembly Scroll Reveal) -->
+        <article class="project-card tilt-card glass-assemble-card">
           <div class="project-left-panel">
             <span class="project-index">01</span>
             <div class="project-meta-box">
@@ -1836,8 +1855,8 @@
           </div>
         </article>
 
-        <!-- Project 02 -->
-        <article class="project-card tilt-card">
+        <!-- Project 02 (Shatter / Glass Assembly Scroll Reveal) -->
+        <article class="project-card tilt-card glass-assemble-card">
           <div class="project-left-panel">
             <span class="project-index">02</span>
             <div class="project-meta-box">
@@ -1871,7 +1890,7 @@
     <div class="container">
       <div class="section-header">
         <span class="section-num">04</span>
-        <h2 class="section-title shiny-sweep blur-heading">Technical &amp; Soft Skills</h2>
+        <h2 class="section-title shiny-sweep">Technical &amp; Soft Skills</h2>
       </div>
 
       <!-- Interactive Filter Tabs -->
@@ -1885,7 +1904,7 @@
       </div>
 
       <div class="skills-grid">
-        <div class="skill-block" data-category="languages">
+        <div class="skill-block matrix-item from-left" data-category="languages">
           <h3 class="skill-cat-name">Languages</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">C</span>
@@ -1895,7 +1914,7 @@
           </div>
         </div>
 
-        <div class="skill-block" data-category="frontend">
+        <div class="skill-block matrix-item from-right" data-category="frontend">
           <h3 class="skill-cat-name">Frontend</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">HTML5</span>
@@ -1906,7 +1925,7 @@
           </div>
         </div>
 
-        <div class="skill-block" data-category="frontend">
+        <div class="skill-block matrix-item from-left" data-category="frontend">
           <h3 class="skill-cat-name">Frameworks &amp; UI</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Bootstrap 5</span>
@@ -1916,7 +1935,7 @@
           </div>
         </div>
 
-        <div class="skill-block" data-category="backend">
+        <div class="skill-block matrix-item from-right" data-category="backend">
           <h3 class="skill-cat-name">Backend &amp; Database</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Node.js</span>
@@ -1924,7 +1943,7 @@
           </div>
         </div>
 
-        <div class="skill-block" data-category="tools">
+        <div class="skill-block matrix-item from-left" data-category="tools">
           <h3 class="skill-cat-name">Tools</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Git</span>
@@ -1935,7 +1954,7 @@
           </div>
         </div>
 
-        <div class="skill-block" data-category="tools">
+        <div class="skill-block matrix-item from-right" data-category="tools">
           <h3 class="skill-cat-name">AI-Augmented Workflow</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Claude AI &amp; Codex (Force-Multipliers)</span>
@@ -1943,7 +1962,7 @@
           </div>
         </div>
 
-        <div class="skill-block" data-category="soft">
+        <div class="skill-block matrix-item from-left" data-category="soft">
           <h3 class="skill-cat-name">Soft Skills</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Problem Solving</span>
@@ -1955,7 +1974,7 @@
           </div>
         </div>
 
-        <div class="skill-block" data-category="tools">
+        <div class="skill-block matrix-item from-right" data-category="tools">
           <h3 class="skill-cat-name">Interests</h3>
           <div class="skill-pill-list">
             <span class="skill-item-pill">Machine Learning (Beginner level)</span>
@@ -1971,12 +1990,12 @@
     <div class="container">
       <div class="section-header">
         <span class="section-num">05</span>
-        <h2 class="section-title shiny-sweep blur-heading">Certifications</h2>
+        <h2 class="section-title shiny-sweep">Certifications</h2>
       </div>
 
       <div class="cert-grid" id="cert-grid">
         <!-- Cert 1 -->
-        <div class="cert-card" data-cert-idx="0" data-cert-src="assets/certificates/cert-1.jpg">
+        <div class="cert-card matrix-item from-left" data-cert-idx="0" data-cert-src="assets/certificates/cert-1.jpg">
           <span class="cert-badge">Job Simulation</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-1.jpg" alt="JPMorgan Chase Software Engineering Job Simulation Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -1993,7 +2012,7 @@
         </div>
 
         <!-- Cert 2 -->
-        <div class="cert-card" data-cert-idx="1" data-cert-src="assets/certificates/cert-2.jpg">
+        <div class="cert-card matrix-item from-left" data-cert-idx="1" data-cert-src="assets/certificates/cert-2.jpg">
           <span class="cert-badge">Hackathon</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-2.jpg" alt="Smart India Hackathon (SIH) Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -2010,7 +2029,7 @@
         </div>
 
         <!-- Cert 3 -->
-        <div class="cert-card" data-cert-idx="2" data-cert-src="assets/certificates/cert-3.jpg">
+        <div class="cert-card matrix-item from-right" data-cert-idx="2" data-cert-src="assets/certificates/cert-3.jpg">
           <span class="cert-badge">Program</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-3.jpg" alt="Google Cloud AI Applications Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -2027,7 +2046,7 @@
         </div>
 
         <!-- Cert 4 -->
-        <div class="cert-card" data-cert-idx="3" data-cert-src="assets/certificates/cert-4.jpg">
+        <div class="cert-card matrix-item from-left" data-cert-idx="3" data-cert-src="assets/certificates/cert-4.jpg">
           <span class="cert-badge">Job Simulation</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-4.jpg" alt="Tata Group Data Analytics Job Simulation Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -2044,7 +2063,7 @@
         </div>
 
         <!-- Cert 5 -->
-        <div class="cert-card" data-cert-idx="4" data-cert-src="assets/certificates/cert-5.jpg">
+        <div class="cert-card matrix-item from-right" data-cert-idx="4" data-cert-src="assets/certificates/cert-5.jpg">
           <span class="cert-badge">Course</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-5.jpg" alt="Google AI Essentials Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -2061,7 +2080,7 @@
         </div>
 
         <!-- Cert 6 -->
-        <div class="cert-card" data-cert-idx="5" data-cert-src="assets/certificates/cert-6.jpg">
+        <div class="cert-card matrix-item from-left" data-cert-idx="5" data-cert-src="assets/certificates/cert-6.jpg">
           <span class="cert-badge">Competition</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-6.jpg" alt="GDG Capture The Flag Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -2078,7 +2097,7 @@
         </div>
 
         <!-- Cert 7 -->
-        <div class="cert-card" data-cert-idx="6" data-cert-src="assets/certificates/cert-7.jpg">
+        <div class="cert-card matrix-item from-right" data-cert-idx="6" data-cert-src="assets/certificates/cert-7.jpg">
           <span class="cert-badge">Bootcamp</span>
           <div class="cert-image-wrapper">
             <img src="assets/certificates/cert-7.jpg" alt="Complete Full-Stack Web Development Bootcamp Certificate" onerror="this.onerror=null;this.style.display='none';">
@@ -2102,11 +2121,11 @@
     <div class="container">
       <div class="section-header">
         <span class="section-num">06</span>
-        <h2 class="section-title shiny-sweep blur-heading">Achievements</h2>
+        <h2 class="section-title shiny-sweep">Achievements</h2>
       </div>
 
       <div class="achievements-grid">
-        <div class="achievement-card">
+        <div class="achievement-card matrix-item from-left">
           <div class="ach-icon-box">🏆</div>
           <div class="ach-details">
             <h3 class="ach-title">Smart India Hackathon — Technovanza 5.0</h3>
@@ -2114,7 +2133,7 @@
           </div>
         </div>
 
-        <div class="achievement-card">
+        <div class="achievement-card matrix-item from-right">
           <div class="ach-icon-box">💡</div>
           <div class="ach-details">
             <h3 class="ach-title">Google AI Essentials Certified</h3>
@@ -2122,7 +2141,7 @@
           </div>
         </div>
 
-        <div class="achievement-card">
+        <div class="achievement-card matrix-item from-left">
           <div class="ach-icon-box">🎓</div>
           <div class="ach-details">
             <h3 class="ach-title">Academic Excellence — Intermediate</h3>
@@ -2130,7 +2149,7 @@
           </div>
         </div>
 
-        <div class="achievement-card">
+        <div class="achievement-card matrix-item from-right">
           <div class="ach-icon-box">☁️</div>
           <div class="ach-details">
             <h3 class="ach-title">Google Developer Groups AI Edition</h3>
@@ -2146,11 +2165,11 @@
     <div class="container">
       <div class="section-header">
         <span class="section-num">07</span>
-        <h2 class="section-title shiny-sweep blur-heading">Education</h2>
+        <h2 class="section-title shiny-sweep">Education</h2>
       </div>
 
       <div class="edu-timeline">
-        <div class="edu-item">
+        <div class="edu-item timeline-unfold">
           <h3 class="edu-school">CMR Technical Campus, Hyderabad</h3>
           <div class="edu-degree">B.Tech in Computer Science and Engineering (Artificial Intelligence &amp; Machine Learning) | August 2024 – May 2028</div>
           <ul class="edu-details-list">
@@ -2158,7 +2177,7 @@
           </ul>
         </div>
 
-        <div class="edu-item">
+        <div class="edu-item timeline-unfold">
           <h3 class="edu-school">Deeksha Junior College</h3>
           <div class="edu-degree">Intermediate (Class 12th) — MPC | 2022 – 2024</div>
           <ul class="edu-details-list">
@@ -2166,7 +2185,7 @@
           </ul>
         </div>
 
-        <div class="edu-item">
+        <div class="edu-item timeline-unfold">
           <h3 class="edu-school">DAV Public School</h3>
           <div class="edu-degree">Secondary School (Class 10th) — CBSE Board | Completed 2022</div>
           <ul class="edu-details-list">
@@ -2182,16 +2201,16 @@
     <div class="container">
       <div class="section-header">
         <span class="section-num">08</span>
-        <h2 class="section-title shiny-sweep blur-heading">Competitive Programming</h2>
+        <h2 class="section-title shiny-sweep">Competitive Programming</h2>
       </div>
 
-      <div class="cp-overview-block">
+      <div class="cp-overview-block glass-assemble-card">
         <div class="cp-total-num counter-num" data-target="580" data-suffix="+">0</div>
         <div class="cp-total-label">TOTAL PROBLEMS SOLVED ACROSS LEETCODE, CODECHEF &amp; CODEFORCES</div>
       </div>
 
       <div class="cp-grid">
-        <div class="cp-card">
+        <div class="cp-card cp-3d-card">
           <div class="cp-platform">LEETCODE</div>
           <div>
             <div class="cp-stat-val counter-num" data-target="217" data-suffix="">0</div>
@@ -2199,7 +2218,7 @@
           </div>
         </div>
 
-        <div class="cp-card">
+        <div class="cp-card cp-3d-card">
           <div class="cp-platform">CODECHEF</div>
           <div>
             <div class="cp-stat-val counter-num" data-target="326" data-suffix="">0</div>
@@ -2207,7 +2226,7 @@
           </div>
         </div>
 
-        <div class="cp-card">
+        <div class="cp-card cp-3d-card">
           <div class="cp-platform">CODEFORCES</div>
           <div>
             <div class="cp-stat-val counter-num" data-target="40" data-prefix="~" data-suffix="">0</div>
@@ -2223,7 +2242,7 @@
     <div class="container">
       <div class="section-header">
         <span class="section-num">09</span>
-        <h2 class="section-title shiny-sweep blur-heading">Get In Touch</h2>
+        <h2 class="section-title shiny-sweep">Get In Touch</h2>
       </div>
 
       <div class="contact-layout">
@@ -2454,7 +2473,75 @@
       })();
 
       /* ──────────────────────────────────────────────────────────────
-         5. INTERACTIVE NUMERICAL COUNT-UP ANIMATION FOR CP STATS
+         5. MULTI-ELEMENT SCROLL ANIMATIONS ENGINE (GLASS RE-ASSEMBLY, MATRIX WAVES, SHUTTERS)
+         ────────────────────────────────────────────────────────────── */
+      (() => {
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) return;
+
+        // A. Section Headers Shutter Reveal
+        const headers = document.querySelectorAll('.section-header');
+        const headerObs = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        headers.forEach((h) => headerObs.observe(h));
+
+        // B. Glass Re-Assembly Cards
+        const glassCards = document.querySelectorAll('.glass-assemble-card');
+        const glassObs = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('assembled');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        glassCards.forEach((c) => glassObs.observe(c));
+
+        // C. Matrix Wave Stagger Items
+        const matrixItems = document.querySelectorAll('.matrix-item');
+        const matrixObs = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        matrixItems.forEach((m) => matrixObs.observe(m));
+
+        // D. Timeline Unfold Items
+        const timelineItems = document.querySelectorAll('.timeline-unfold');
+        const timeObs = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.15 });
+        timelineItems.forEach((t) => timeObs.observe(t));
+
+        // E. 3D Stat Cards Flip
+        const cpCards = document.querySelectorAll('.cp-3d-card');
+        const cpObs = new IntersectionObserver((entries, obs) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        cpCards.forEach((cp) => cpObs.observe(cp));
+      })();
+
+      /* ──────────────────────────────────────────────────────────────
+         6. INTERACTIVE NUMERICAL COUNT-UP ANIMATION FOR CP STATS
          ────────────────────────────────────────────────────────────── */
       (() => {
         const counters = document.querySelectorAll('.counter-num');
@@ -2507,7 +2594,7 @@
       })();
 
       /* ──────────────────────────────────────────────────────────────
-         6. INTERACTIVE SKILL CATEGORY FILTER TABS
+         7. INTERACTIVE SKILL CATEGORY FILTER TABS
          ────────────────────────────────────────────────────────────── */
       (() => {
         const filterBtns = document.querySelectorAll('.skill-filter-btn');
@@ -2536,71 +2623,7 @@
       })();
 
       /* ──────────────────────────────────────────────────────────────
-         7. SCROLL-TRIGGERED BLUR HEADINGS (INTERSECTION OBSERVER)
-         ────────────────────────────────────────────────────────────── */
-      (() => {
-        const blurHeadings = document.querySelectorAll('.blur-heading');
-        if (!blurHeadings.length) return;
-
-        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReducedMotion) return;
-
-        blurHeadings.forEach((heading) => {
-          heading.style.opacity = '0';
-          heading.style.filter = 'blur(8px)';
-          heading.style.transform = 'scale(0.95)';
-          heading.style.transition = 'transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease, filter 0.8s ease';
-        });
-
-        const headingObserver = new IntersectionObserver((entries, obs) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const el = entry.target;
-              el.style.opacity = '1';
-              el.style.filter = 'blur(0px)';
-              el.style.transform = 'scale(1)';
-              obs.unobserve(el);
-            }
-          });
-        }, { threshold: 0.1 });
-
-        blurHeadings.forEach((heading) => headingObserver.observe(heading));
-      })();
-
-      /* ──────────────────────────────────────────────────────────────
-         8. STICKY SIDE INDEX RAIL HIGHLIGHTING
-         ────────────────────────────────────────────────────────────── */
-      (() => {
-        const railItems = document.querySelectorAll('.rail-item');
-        const sections = document.querySelectorAll('section[id]');
-        if (!railItems.length || !sections.length) return;
-
-        const observerOptions = {
-          root: null,
-          rootMargin: '-30% 0px -50% 0px',
-          threshold: 0
-        };
-
-        const sectionObserver = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              const id = entry.target.getAttribute('id');
-              railItems.forEach((item) => {
-                if (item.getAttribute('data-section') === id) {
-                  item.classList.add('active');
-                } else {
-                  item.classList.remove('active');
-                }
-              });
-            }
-          });
-        }, observerOptions);
-
-        sections.forEach((sec) => sectionObserver.observe(sec));
-      })();
-
-      /* ──────────────────────────────────────────────────────────────
-         9. DESKTOP-ONLY INTERACTIONS (CURSOR, MAGNETIC BTNS, 3D TILT)
+         8. DESKTOP-ONLY INTERACTIONS (CURSOR, MAGNETIC BTNS, 3D TILT)
          ────────────────────────────────────────────────────────────── */
       const isDesktop = window.innerWidth > 1080 && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2672,7 +2695,7 @@
       }
 
       /* ──────────────────────────────────────────────────────────────
-         10. CERTIFICATE LIGHTBOX WITH PREV/NEXT NAVIGATION
+         9. CERTIFICATE LIGHTBOX WITH PREV/NEXT NAVIGATION
          ────────────────────────────────────────────────────────────── */
       (() => {
         const lightbox = document.getElementById('lightbox');
