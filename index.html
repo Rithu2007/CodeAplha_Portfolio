@@ -606,7 +606,7 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       7. EDITORIAL SCROLL MOTION CLASSES (SMOOTH 3D CARD REVEALS)
+       7. EDITORIAL SCROLL MOTION CLASSES
        ────────────────────────────────────────────────────────────── */
     .scroll-reveal-card {
       opacity: 0;
@@ -1437,33 +1437,48 @@
     }
 
     /* ──────────────────────────────────────────────────────────────
-       18. CUSTOM DESKTOP SPRING CURSOR
+       18. PERFECTLY CENTERED DUAL CONCENTRIC CURSOR
        ────────────────────────────────────────────────────────────── */
-    .custom-cursor {
+    .custom-cursor-dot {
       position: fixed;
-      top: -100px;
-      left: -100px;
-      width: 20px;
-      height: 20px;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 5px;
+      background-color: var(--ink);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 10000;
+      opacity: 0;
+      display: none;
+      mix-blend-mode: difference;
+    }
+
+    .custom-cursor-ring {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 24px;
+      height: 24px;
       border: 1px solid var(--ink);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
-      transform: translate(-50%, -50%);
-      transition: width 0.2s ease, height 0.2s ease, background-color 0.2s ease, opacity 0.3s ease;
+      transition: width 0.22s ease, height 0.22s ease, background-color 0.22s ease, opacity 0.3s ease;
       mix-blend-mode: difference;
       opacity: 0;
       display: none;
     }
 
-    .custom-cursor.visible {
+    .custom-cursor-dot.visible,
+    .custom-cursor-ring.visible {
       opacity: 1;
       display: block;
     }
 
-    .custom-cursor.hovering {
-      width: 44px;
-      height: 44px;
+    .custom-cursor-ring.hovering {
+      width: 48px;
+      height: 48px;
       background-color: var(--ink);
     }
 
@@ -1572,7 +1587,7 @@
         transition-duration: 0s !important;
         transition-delay: 0s !important;
       }
-      .custom-cursor, .marquee-container {
+      .custom-cursor-dot, .custom-cursor-ring, .marquee-container {
         display: none !important;
       }
       .shiny-sweep {
@@ -1588,8 +1603,9 @@
 </head>
 <body>
 
-  <!-- ===================== CUSTOM DESKTOP CURSOR ===================== -->
-  <div class="custom-cursor" id="custom-cursor"></div>
+  <!-- ===================== PERFECTLY ALIGNED DUAL CONCENTRIC CURSOR ===================== -->
+  <div class="custom-cursor-dot" id="cursor-dot"></div>
+  <div class="custom-cursor-ring" id="cursor-ring"></div>
 
   <!-- ===================== NAVBAR ===================== -->
   <header id="navbar">
@@ -2354,7 +2370,7 @@
          4. HIGH-PRECISION SCROLL REVEAL ENGINE
          ────────────────────────────────────────────────────────────── */
       (() => {
-        const prefersReduced = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         const revealElements = document.querySelectorAll('.scroll-reveal-card, .matrix-item, .section-header');
         if (!revealElements.length) return;
 
@@ -2456,42 +2472,50 @@
       })();
 
       /* ──────────────────────────────────────────────────────────────
-         7. DESKTOP-ONLY INTERACTIONS (CURSOR, MAGNETIC BTNS, 3D TILT)
+         7. PERFECTLY ALIGNED CONCENTRIC DUAL CURSOR ENGINE
          ────────────────────────────────────────────────────────────── */
       const isDesktop = window.innerWidth > 1080 && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
       const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       if (isDesktop && !prefersReduced) {
-        // Custom Spring Cursor
-        const cursor = document.getElementById('custom-cursor');
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
         let cursorVisible = false;
 
-        if (cursor) {
+        if (dot && ring) {
           let mouseX = -100, mouseY = -100;
-          let cursorX = -100, cursorY = -100;
+          let ringX = -100, ringY = -100;
 
           document.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
+
+            // Dot tracks mouse 1:1 instantly with translate3d + translate(-50%, -50%)
+            dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+
             if (!cursorVisible) {
               cursorVisible = true;
-              cursor.classList.add('visible');
+              dot.classList.add('visible');
+              ring.classList.add('visible');
+              ringX = mouseX;
+              ringY = mouseY;
             }
           });
 
           function renderCursor() {
             if (cursorVisible) {
-              cursorX += (mouseX - cursorX) * 0.18;
-              cursorY += (mouseY - cursorY) * 0.18;
-              cursor.style.transform = `translate(${cursorX}px, ${cursorY}px)`;
+              ringX += (mouseX - ringX) * 0.18;
+              ringY += (mouseY - ringY) * 0.18;
+              // Outer ring spring-follows mouse, 100% concentric with dot via translate(-50%, -50%)
+              ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
             }
             requestAnimationFrame(renderCursor);
           }
           renderCursor();
 
           document.querySelectorAll('a, button, .cert-card, .project-card, .skill-filter-btn').forEach((el) => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hovering'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hovering'));
+            el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
+            el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
           });
         }
 
